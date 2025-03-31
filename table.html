@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>Táblázat CRUD</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Web-programozás-1 Elméleti Házi feladat</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Kezdőlap</a></li>
+      <li><a href="table.html" class="active">Táblázat</a></li>
+      <li><a href="html5.html">HTML5</a></li>
+      <li><a href="chartjs.html">ChartJS</a></li>
+      <li><a href="ajax.html">AJAX</a></li>
+      <li><a href="oojs.html">OOJS</a></li>
+      <li><a href="react.html">React</a></li>
+    </ul>
+  </nav>
+
+  <aside>
+    <p>Táblázat CRUD példák</p>
+  </aside>
+
+  <div id="content">
+    <h2>Táblázat CRUD</h2>
+
+    
+    <form id="createForm">
+      <input type="text" id="input1" placeholder="Adat 1" required maxlength="30">
+      <input type="text" id="input2" placeholder="Adat 2" required maxlength="30">
+      <input type="text" id="input3" placeholder="Adat 3" required maxlength="30">
+      <input type="text" id="input4" placeholder="Adat 4" required maxlength="30">
+      <button type="submit">Létrehoz</button>
+    </form>
+
+    
+    <table id="dataTable" border="1">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Oszlop 1</th>
+          <th onclick="sortTable(1)">Oszlop 2</th>
+          <th onclick="sortTable(2)">Oszlop 3</th>
+          <th onclick="sortTable(3)">Oszlop 4</th>
+          <th>Műveletek</th>
+        </tr>
+        <tr>
+          <th><input type="text" id="search0" onkeyup="filterTable(0)" placeholder="Keresés..."></th>
+          <th><input type="text" id="search1" onkeyup="filterTable(1)" placeholder="Keresés..."></th>
+          <th><input type="text" id="search2" onkeyup="filterTable(2)" placeholder="Keresés..."></th>
+          <th><input type="text" id="search3" onkeyup="filterTable(3)" placeholder="Keresés..."></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    <p>Készítette: Kálmán Béla</p>
+  </footer>
+
+  
+  <script src="table.js"></script>
+</body>
+</html>
