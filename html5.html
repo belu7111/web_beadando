@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Példák</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .ex { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; }
+    #drag { width: 80px; height: 80px; background: #f99; text-align: center; line-height: 80px; cursor: move; }
+    #drop { width: 100px; height: 100px; border: 1px dashed #000; text-align: center; line-height: 100px; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Web-programozás-1 Elméleti Házi feladat</h1>
+  </header>
+  
+  <nav>
+    <ul>
+      <li><a href="index.html">Kezdőlap</a></li>
+      <li><a href="table.html">Táblázat</a></li>
+      <li><a href="html5.html" class="active">HTML5</a></li>
+      <li><a href="chartjs.html">ChartJS</a></li>
+      <li><a href="ajax.html">AJAX</a></li>
+      <li><a href="oojs.html">OOJS</a></li>
+      <li><a href="react.html">React</a></li>
+    </ul>
+  </nav>
+  
+  <aside>
+    <p>HTML5 példák</p>
+  </aside>
+  
+  <div id="content">
+    <h2>HTML5 Példák</h2>
+    
+    <div class="ex">
+      <h3>Web Storage</h3>
+      <button onclick="saveData()">Mentés</button>
+      <button onclick="loadData()">Betöltés</button>
+      <p id="storageRes"></p>
+    </div>
+    
+    <div class="ex">
+      <h3>Geolocation API</h3>
+      <button onclick="getLocation()">Helymeghatározás</button>
+      <p id="locRes"></p>
+    </div>
+    
+    <div class="ex">
+      <h3>Drag and Drop API</h3>
+      <div id="drag" draggable="true" ondragstart="drag(event)">Húzz!</div>
+      <div id="drop" ondragover="allowDrop(event)" ondrop="drop(event)">Ide</div>
+    </div>
+    
+    <div class="ex">
+      <h3>Canvas</h3>
+      <canvas id="myCanvas" width="200" height="100" style="border:1px solid #000;"></canvas>
+    </div>
+    
+    <div class="ex">
+      <h3>SVG</h3>
+      <svg width="100" height="100">
+        <circle cx="50" cy="50" r="40" fill="yellow" stroke="green" stroke-width="4"/>
+      </svg>
+    </div>
+  </div>
+  
+  <footer>
+    <p>Készítette: Andó Ákos</p>
+  </footer>
+  
+  <script>
+    function saveData() {
+      localStorage.setItem("data", "Egyszerű HTML5 adat");
+      document.getElementById("storageRes").innerText = "Adat elmentve.";
+    }
+    function loadData() {
+      var d = localStorage.getItem("data") || "Nincs adat";
+      document.getElementById("storageRes").innerText = "Adat: " + d;
+    }
+    
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          document.getElementById("locRes").innerText = "Lat: " + pos.coords.latitude + ", Lon: " + pos.coords.longitude;
+        }, function(err) {
+          document.getElementById("locRes").innerText = "Hiba: " + err.message;
+        });
+      } else {
+        document.getElementById("locRes").innerText = "Geolocation nem támogatott.";
+      }
+    }
+    
+    function allowDrop(ev) { ev.preventDefault(); }
+    function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+    function drop(ev) {
+      ev.preventDefault();
+      var data = ev.dataTransfer.getData("text");
+      ev.target.appendChild(document.getElementById(data));
+    }
+    
+    window.onload = function() {
+      var canvas = document.getElementById("myCanvas");
+      if (canvas.getContext) {
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "blue";
+        ctx.fillRect(10, 10, 50, 50);
+      }
+    }
+  </script>
+</body>
+</html>
