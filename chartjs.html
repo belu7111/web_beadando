@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>ChartJS Példa</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Web-programozás-1 Elméleti Házi feladat</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Kezdőlap</a></li>
+      <li><a href="table.html">Táblázat</a></li>
+      <li><a href="html5.html">HTML5</a></li>
+      <li><a href="chartjs.html" class="active">ChartJS</a></li>
+      <li><a href="ajax.html">AJAX</a></li>
+      <li><a href="oojs.html">OOJS</a></li>
+      <li><a href="react.html">React</a></li>
+    </ul>
+  </nav>
+
+  <aside>
+    <p>ChartJS példa</p>
+  </aside>
+
+  <div id="content">
+    <h2>ChartJS Táblázat és Vonaldiagram</h2>
+   
+    <table id="chartTable" border="1">
+      <thead>
+        <tr>
+          <th>Oszlop 1</th>
+          <th>Oszlop 2</th>
+          <th>Oszlop 3</th>
+          <th>Oszlop 4</th>
+          <th>Oszlop 5</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr onclick="drawChart(this)"><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td></tr>
+        <tr onclick="drawChart(this)"><td>15</td><td>25</td><td>35</td><td>45</td><td>55</td></tr>
+        <tr onclick="drawChart(this)"><td>20</td><td>30</td><td>40</td><td>50</td><td>60</td></tr>
+        <tr onclick="drawChart(this)"><td>25</td><td>35</td><td>45</td><td>55</td><td>65</td></tr>
+        <tr onclick="drawChart(this)"><td>30</td><td>40</td><td>50</td><td>60</td><td>70</td></tr>
+      </tbody>
+    </table>
+
+    
+    <canvas id="lineChart" width="400" height="200"></canvas>
+  </div>
+
+  <footer>
+    <p>Készítette: Kálmán Béla</p>
+  </footer>
+
+  <script>
+    let chart;
+    function drawChart(row) {
+      let cells = row.getElementsByTagName("td");
+      let dataArr = [];
+      for (let i = 0; i < cells.length; i++) {
+        dataArr.push(parseInt(cells[i].innerText));
+      }
+
+      let ctx = document.getElementById('lineChart').getContext('2d');
+      if (chart) {
+        chart.destroy();
+      }
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ["O1", "O2", "O3", "O4", "O5"],
+          datasets: [{
+            label: 'Adatok',
+            data: dataArr,
+            borderColor: 'blue',
+            borderWidth: 2,
+            fill: false
+          }]
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
