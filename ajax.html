@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>AJAX Példa</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Web-programozás-1 Elméleti Házi feladat</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Kezdőlap</a></li>
+      <li><a href="table.html">Táblázat</a></li>
+      <li><a href="html5.html">HTML5</a></li>
+      <li><a href="chartjs.html">ChartJS</a></li>
+      <li><a href="ajax.html" class="active">AJAX</a></li>
+      <li><a href="oojs.html">OOJS</a></li>
+      <li><a href="react.html">React</a></li>
+    </ul>
+  </nav>
+
+  <aside>
+    <p>AJAX példa az API-hoz</p>
+  </aside>
+
+  <div id="content">
+    <h2>AJAX CRUD műveletek</h2>
+    
+
+    <div>
+      <h3>Create</h3>
+      <input type="text" id="createName" placeholder="Name" maxlength="30">
+      <input type="text" id="createHeight" placeholder="Height" maxlength="30">
+      <input type="text" id="createWeight" placeholder="Weight" maxlength="30">
+      <button onclick="createRecord()">Létrehoz</button>
+      <p id="createMsg"></p>
+    </div>
+
+    <div>
+      <h3>Read</h3>
+      <button onclick="readRecords()">Adatok lekérése</button>
+      <div id="readResult"></div>
+    </div>
+
+    <div>
+      <h3>Update</h3>
+      <input type="text" id="updateId" placeholder="ID">
+      <button onclick="getDataForId()">Adat lekérése ID alapján</button><br>
+      <input type="text" id="updateName" placeholder="Name" maxlength="30">
+      <input type="text" id="updateHeight" placeholder="Height" maxlength="30">
+      <input type="text" id="updateWeight" placeholder="Weight" maxlength="30">
+      <button onclick="updateRecord()">Módosít</button>
+      <p id="updateMsg"></p>
+    </div>
+
+    <div>
+      <h3>Delete</h3>
+      <input type="text" id="deleteId" placeholder="ID">
+      <button onclick="deleteRecord()">Töröl</button>
+      <p id="deleteMsg"></p>
+    </div>
+  </div>
+
+  <footer>
+    <p>Készítette: Andó Ákos</p>
+  </footer>
+
+  <script src="ajax.js"></script>
+</body>
+</html>
