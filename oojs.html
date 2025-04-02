@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>OOJS Példa</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Web-programozás-1 Elméleti Házi feladat</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Kezdőlap</a></li>
+      <li><a href="table.html">Táblázat</a></li>
+      <li><a href="html5.html">HTML5</a></li>
+      <li><a href="chartjs.html">ChartJS</a></li>
+      <li><a href="ajax.html">AJAX</a></li>
+      <li><a href="oojs.html" class="active">OOJS</a></li>
+      <li><a href="react.html">React</a></li>
+    </ul>
+  </nav>
+
+  <aside>
+    <p>OOJS példa</p>
+  </aside>
+
+  <div id="content">
+    <h2>Objektumorientált JavaScript</h2>
+    <div id="oojsOutput"></div>
+  </div>
+
+  <footer>
+    <p>Készítette: Kálmán Béla</p>
+  </footer>
+
+  <script>
+   
+    class Person {
+      constructor(name, age) {
+        this.name = name;
+        this.age = age;
+      }
+      introduce() {
+        return `Szia, ${this.name} vagyok, ${this.age} éves.`;
+      }
+    }
+
+ 
+    class Student extends Person {
+      constructor(name, age, major) {
+        super(name, age);
+        this.major = major;
+      }
+      introduce() {
+        return super.introduce() + ` A szakom: ${this.major}.`;
+      }
+    }
+
+    let person = new Person("Ákos", 48);
+    let student = new Student("Béla", 47, "Informatika");
+
+    let outputDiv = document.getElementById("oojsOutput");
+    let p1 = document.createElement("p");
+    p1.innerText = person.introduce();
+    let p2 = document.createElement("p");
+    p2.innerText = student.introduce();
+    outputDiv.appendChild(p1);
+    outputDiv.appendChild(p2);
+
+   
+    let extraParagraph = document.createElement("p");
+    extraParagraph.innerText = "Ez a bekezdés közvetlenül a body-hoz lett hozzáadva!";
+    document.body.appendChild(extraParagraph);
+  </script>
+</body>
+</html>
