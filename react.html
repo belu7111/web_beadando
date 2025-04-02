@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>React Példa</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    .tab {
+      display: inline-block;
+      padding: 10px;
+      cursor: pointer;
+      background: #ddd;
+      margin-right: 5px;
+    }
+    .activeTab {
+      background: #bbb;
+    }
+    button {
+      margin: 3px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Web-programozás-1 Elméleti Házi feladat</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Kezdőlap</a></li>
+      <li><a href="table.html">Táblázat</a></li>
+      <li><a href="html5.html">HTML5</a></li>
+      <li><a href="chartjs.html">ChartJS</a></li>
+      <li><a href="ajax.html">AJAX</a></li>
+      <li><a href="oojs.html">OOJS</a></li>
+      <li><a href="react.html" class="active">React</a></li>
+    </ul>
+  </nav>
+
+  <aside>
+    <p>React alkalmazások</p>
+  </aside>
+
+  <div id="content">
+    <h2>React Egyoldalas Alkalmazás</h2>
+    <div>
+      <span class="tab activeTab" id="tabCalculator" onclick="setActiveTab('calculator')">Calculator</span>
+      <span class="tab" id="tabTicTacToe" onclick="setActiveTab('tictactoe')">Tic Tac Toe</span>
+    </div>
+    <div id="reactApp"></div>
+  </div>
+
+  <footer>
+    <p>Készítette: Andó Ákos</p>
+  </footer>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function Calculator() {
+      const [result, setResult] = useState("");
+
+      const handleClick = (val) => {
+        if (val === "=") {
+          try {
+            setResult(eval(result).toString());
+          } catch(e) {
+            setResult("Error");
+          }
+        } else if (val === "C") {
+          setResult("");
+        } else {
+          setResult(result + val);
+        }
+      };
+
+      const buttons = [
+        "7","8","9","/",
+        "4","5","6","*",
+        "1","2","3","-",
+        "0",".","C","+",
+        "="
+      ];
+
+      return (
+        <div>
+          <h3>Calculator</h3>
+          <input
+            type="text"
+            value={result}
+            readOnly
+            style={{ width: '245px', fontSize: '16px' }}
+          />
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 60px)',
+            gap: '5px',
+            marginTop: '10px'
+          }}>
+            {buttons.map((btn, i) => (
+              <button
+                key={i}
+                onClick={() => handleClick(btn)}
+                style={{
+                  width: '60px',
+                  height: '60px',
+                  fontSize: '24px'
+                }}
+              >
+                {btn}
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    function TicTacToe() {
+      const initialBoard = Array(9).fill(null);
+      const [board, setBoard] = useState(initialBoard);
+      const [xIsNext, setXIsNext] = useState(true);
+
+      const handleClick = (index) => {
+        if (board[index] || calculateWinner(board)) return;
+        const newBoard = board.slice();
+        newBoard[index] = xIsNext ? "X" : "O";
+        setBoard(newBoard);
+        setXIsNext(!xIsNext);
+      };
+
+      const winner = calculateWinner(board);
+      const status = winner
+        ? `Nyertes: ${winner}`
+        : `Következő: ${xIsNext ? "X" : "O"}`;
+
+      return (
+        <div>
+          <h3>Tic Tac Toe</h3>
+          <div>{status}</div>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 60px)',
+            gap: '5px',
+            marginTop: '10px'
+          }}>
+            {board.map((value, i) => (
+              <button
+                key={i}
+                style={{
+                  width: '60px',
+                  height: '60px',
+                  fontSize: '24px'
+                }}
+                onClick={() => handleClick(i)}
+              >
+                {value}
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+
+    function calculateWinner(squares) {
+      const lines = [
+        [0,1,2], [3,4,5], [6,7,8],
+        [0,3,6], [1,4,7], [2,5,8],
+        [0,4,8], [2,4,6]
+      ];
+      for (let [a,b,c] of lines) {
+        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+          return squares[a];
+        }
+      }
+      return null;
+    }
+
+    function setActiveTab(tab) {
+      document.getElementById("tabCalculator").classList.remove("activeTab");
+      document.getElementById("tabTicTacToe").classList.remove("activeTab");
+
+      if (tab === "calculator") {
+        document.getElementById("tabCalculator").classList.add("activeTab");
+        ReactDOM.render(<Calculator />, document.getElementById("reactApp"));
+      } else {
+        document.getElementById("tabTicTacToe").classList.add("activeTab");
+        ReactDOM.render(<TicTacToe />, document.getElementById("reactApp"));
+      }
+    }
+
+    setActiveTab("calculator");
+  </script>
+</body>
+</html>
