@@ -5,9 +5,29 @@
   <title>HTML5 Példák</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .ex { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; }
-    #drag { width: 80px; height: 80px; background: #f99; text-align: center; line-height: 80px; cursor: move; }
-    #drop { width: 100px; height: 100px; border: 1px dashed #000; text-align: center; line-height: 100px; margin-top: 5px; }
+    .ex {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    #drag {
+      width: 80px;
+      height: 80px;
+      background: #f99;
+      text-align: center;
+      line-height: 80px;
+      cursor: move;
+    }
+    #drop {
+      width: 150px;
+      height: 150px;
+      border: 2px dashed #000;
+      margin-top: 5px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
@@ -49,7 +69,7 @@
     
     <div class="ex">
       <h3>Drag and Drop API</h3>
-      <div id="drag" draggable="true" ondragstart="drag(event)">Húzz!</div>
+        <div id="drag" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)">Húzz!</div>
       <div id="drop" ondragover="allowDrop(event)" ondrop="drop(event)">Ide</div>
     </div>
     
@@ -92,12 +112,41 @@
       }
     }
     
-    function allowDrop(ev) { ev.preventDefault(); }
-    function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+ function allowDrop(ev) {
+      ev.preventDefault();
+    }
+    
+    function drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+    
+    
     function drop(ev) {
       ev.preventDefault();
       var data = ev.dataTransfer.getData("text");
-      ev.target.appendChild(document.getElementById(data));
+   var draggedEl = document.getElementById(data);
+      
+      var dropRect = ev.currentTarget.getBoundingClientRect();
+      var x = ev.clientX - dropRect.left - draggedEl.offsetWidth / 2;
+      var y = ev.clientY - dropRect.top - draggedEl.offsetHeight / 2;
+      
+      draggedEl.style.position = "absolute";
+      draggedEl.style.left = x + "px";
+      draggedEl.style.top = y + "px";
+      
+      ev.currentTarget.appendChild(draggedEl);
+    }
+    
+    function dragEnd(ev) {
+      var dropZone = document.getElementById("drop");
+      if (ev.target.parentNode !== dropZone) {
+        dropZone.appendChild(ev.target);
+        ev.target.style.position = "absolute";
+        var x = dropZone.clientWidth / 2 - ev.target.offsetWidth / 2;
+        var y = dropZone.clientHeight / 2 - ev.target.offsetHeight / 2;
+        ev.target.style.left = x + "px";
+        ev.target.style.top = y + "px";
+      }
     }
     
     window.onload = function() {
